@@ -1,0 +1,57 @@
+plugins {
+    id 'java' // or 'groovy' Must be explicitly applied
+    id 'com.github.johnrengelman.shadow' version '1.2.1'
+}
+
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+group = 'com.leidos'
+version = '1.1.0'
+
+description = """
+FHWA Connected Vehicle DSRC Message Processor
+
+Developed under TOPR18 for FHWA at Turner Fairbanks Highway Research Center 2015.
+
+Contact: <kyle.rush@leidos.com>
+"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+mainClassName = 'com.leidos.dataparser.main.DataProcessingApplication'
+
+repositories {
+    flatDir {
+        dirs 'lib'
+    }
+    maven { url "http://repo.maven.apache.org/maven2" }
+}
+
+dependencies {
+    compile group: 'org.javassist', name: 'javassist',  version: '3.15.0-GA'
+    compile group: 'org.springframework', name: 'spring-core', version:'4.1.6.RELEASE'
+    compile group: 'org.springframework', name: 'spring-context', version:'4.1.6.RELEASE'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version:'2.3'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version:'2.3'
+    compile group: 'commons-io', name: 'commons-io', version: '2.4'
+    compile name: 'forms_rt', version: '14.1.3-idea'
+    compile group: 'joda-time', name: 'joda-time', version: '2.5'
+    testCompile 'junit:junit:4.12'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.leidos.dataparser.main.DataProcessingApplication'
+    }
+}
+
+shadowJar {
+    mergeServiceFiles('META-INF/spring.*')
+}
+
+
+

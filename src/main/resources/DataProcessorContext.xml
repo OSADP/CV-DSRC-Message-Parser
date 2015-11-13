@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/osgi
+       http://www.springframework.org/schema/osgi/spring-osgi.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- Load the configuration properties file -->
+    <context:annotation-config/>
+
+    <bean id="propertyPlaceholderConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath*:dataprocessor.properties</value>
+            </list>
+        </property>
+        <!-- This means don't blow up if a property is not set -->
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <!--
+        This means that any system properties set on the command line will take precedence over those set locally or in a properties file.
+        -->
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+    </bean>
+
+    <!-- Load the Spring @Autowired annotation processor -->
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+
+    <!-- Load the application context holder -->
+    <bean id="applicationContextHolder" class="com.leidos.dataparser.appcommon.ApplicationContextHolder"/>
+
+    <!-- Data Processing Application Beans -->
+
+    <bean id="settingsManager" class="com.leidos.dataparser.appcommon.SettingsManager"/>
+
+    <bean id="mainWindowForm" class="com.leidos.dataparser.ui.MainUiForm"/>
+
+    <bean id="jobCreator" class="com.leidos.dataparser.executor.JobCreator"/>
+
+    <bean id="uiManager" class="com.leidos.dataparser.ui.UIManager"/>
+
+    <bean id="aboutUi" class="com.leidos.dataparser.ui.AboutForm"/>
+
+    <!-- Parser Pipeline Factories -->
+    <bean id="bsmPipelineFactory" class="com.leidos.dataparser.pipeline.factories.BSMParserPipelineFactory"/>
+    <bean id="mapPipelineFactory" class="com.leidos.dataparser.pipeline.factories.MAPParserPipelineFactory"/>
+    <bean id="fhwaSpatPipelineFactory" class="com.leidos.dataparser.pipeline.factories.FHWASPaTParserPipelineFactory"/>
+
+    <bean id="pipelineFactoryLocator" class="com.leidos.dataparser.pipeline.factories.PipelineFactoryLocator"/>
+
+    <bean id="executor" class="com.leidos.dataparser.executor.ParserExecutor">
+        <constructor-arg index="0" value="${executor.numworkerthreads}"/>
+    </bean>
+
+</beans>
