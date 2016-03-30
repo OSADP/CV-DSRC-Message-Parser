@@ -9,11 +9,11 @@ those PCAP files without having to deal with the minutia of processing that
 data.
 
 ## How do I use it?
-Simply install the Java 8 JRE, download the compiled JAR, and double click.
-From there you select an input folder containing PCAP files and an output 
-folder where you wish the output CSVs to be saved. Then click "Start Processing"
-and the DMP will run in the background and notify you when processing is 
-complete.
+Simply install the Java 8 JRE, install Gradle, build the executable jar, and 
+double click. From there you select an input folder containing PCAP files and 
+an output folder where you wish the output CSVs to be saved. Then click "Start 
+Processing" and the DMP will run in the background and notify you when 
+processing is complete.
 
 ## How is it built?
 The DMP is programmed in Java 8 and makes use of the Spring libraries for
