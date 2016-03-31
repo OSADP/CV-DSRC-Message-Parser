@@ -1,0 +1,10 @@
+# Connected Vehicle DSRC Message Parser Release Notes
+
+## v1.1
+* Updated installation instructions to reflect method of distribution.
+* Added missing library files to distribution.
+
+## v1.0
+* Initial release of CVDMP tool.
+* Supports parsing of BSM, SPaT, and MAP messages from a PCAP file. 
+* Implements full functionality as requested by STOL TO 29.
